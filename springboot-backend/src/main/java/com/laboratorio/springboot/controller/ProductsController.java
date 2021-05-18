@@ -38,13 +38,10 @@ public class ProductsController {
 	@Autowired
 	private ProductsRepository repository;
 	
-	// get all employees
 	@GetMapping("/products")
 	public List<Products> getAllEmployees(){
 		return repository.findAll();
 	}		
-	
-	// create employee rest api
 	@PostMapping("/products")
 	public Products createProducts(@RequestBody Products products) {
 		try {
@@ -58,20 +55,18 @@ public class ProductsController {
 				return products;
 	}
 	
-	// get employee by id rest api
 	@GetMapping("/products/{id}")
 	public ResponseEntity<Products> getEmployeeById(@PathVariable Long id) {
 		Products products = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Product not exist with id :" + id));
 		return ResponseEntity.ok(products);
 	}
 	
-	// update employee rest api
 	
 	@PutMapping("/products/{id}")
 	public ResponseEntity<Products> updateEmployee(@PathVariable Long id, @RequestBody Products productDetails){
 		Products products  = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Product not exist with id :" + id));
 		
 		products.setProductName(productDetails.getProductName());
 		products.setBrand(productDetails.getBrand());
@@ -81,11 +76,10 @@ public class ProductsController {
 		return ResponseEntity.ok(updatedProducts);
 	}
 	
-	// delete employee rest api
 	@DeleteMapping("/products/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
 		Products products = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Product not exist with id :" + id));
 		
 		repository.delete(products);
 		Map<String, Boolean> response = new HashMap<>();
